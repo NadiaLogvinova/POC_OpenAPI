@@ -1,0 +1,59 @@
+openapi: "3.0.3"
+info:
+  title: User Information Management System
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/
+
+paths:
+  /users:
+    get:
+      tags:
+        - users
+      operationId: getUsers
+      summary: Get all users
+      responses:
+        200:
+          description: Get all users successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+
+  /users/{userId}:
+    get:
+      tags:
+        - users
+      operationId: getUser
+      summary: Info for a specific user
+      parameters:
+        - name: userId
+          in: path
+          description: "Id of the user"
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Get user information successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        roomAddress:
+          type: string
